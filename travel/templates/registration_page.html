@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .registration-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 320px;
+            max-width: 80%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .registration-container h2 {
+            text-align: center;
+            color: #333333;
+        }
+
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        a:link{
+        color:white;
+        }
+        .error{
+        color:red;
+        }
+    </style>
+</head>
+<body>
+<br>
+<br>
+<nav>
+
+</nav>
+    <div class="registration-container">
+        <h2>Travel Registration</h2>
+        <form class="registration-form" action="registration_data" method="POST" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Number:</label>
+                <input type="tel" id="contact" name="contact" required  pattern="[0-9]{10}" title="Please enter a 10-digit contact number">
+                <span id="contactNumberError" class="error"></span><br><br>
+
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span id="passwordError" class="error"></span><br><br>
+
+            </div>
+            <div class="form-group">
+                <button   type="submit">Registration</button>
+            </div>
+               {% if error_message %}
+                    <p>{{ error_message }}</p>
+                {% endif %}
+
+        </form>
+    </div>
+<script>
+    function msg(){
+    alert("thank for registration");
+    }
+
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var passwordError = document.getElementById("passwordError");
+        var regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+        if (!regex.test(password)) {
+            passwordError.innerText = "Password must contain at least 8 characters, including one alphabet, one number, and one special character.";
+            return false;
+        } else {
+            passwordError.innerText = "";
+        }
+
+        var contactNumber = document.getElementById("contact").value;
+        var contactNumberError = document.getElementById("contactNumberError");
+
+        if (contactNumber.length !== 10 || isNaN(contactNumber)) {
+            contactNumberError.innerText = "Please enter a valid 10-digit contact number";
+            return false;
+        } else {
+            contactNumberError.innerText = "";
+        }
+
+        return true;
+    }
+</script>
+</body>
+</html>
